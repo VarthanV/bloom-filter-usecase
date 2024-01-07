@@ -1,31 +1,30 @@
 import { Menu, Transition } from '@headlessui/react'
 import React, { Fragment } from 'react'
+import { DropdownOption } from '../../types';
 
 //@ts-expect-error sample project
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-type DropdownOption =  {
-    option:string;
-    value: number;
-}
-type DropdownProps = {
+
+interface DropdownProps  {
     options: DropdownOption[]
     onOptionClick: (value: number)=> void ;
+    title:string;
+    className?:string
 }
 
 
 
-export default function Dropdown({options}:DropdownProps) {
-    console.log('options is ',options)
+export default function Dropdown({options,className,title,onOptionClick}:DropdownProps) {
 
   return (
-    <>
+    <div className={className}>
        <Menu as="div" className="relative inline-block text-left">
       <div>
         <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-          Options
+          {title}
         </Menu.Button>
       </div>
 
@@ -45,6 +44,12 @@ export default function Dropdown({options}:DropdownProps) {
                     <Menu.Item key={item.value}>
                     {({ active }) => (
                       <p
+                      onClick={(e)=>{
+                        e.stopPropagation()
+                        if(onOptionClick){
+                            onOptionClick(item.value)
+                        }
+                      }}
                         className={classNames(
                           active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                           'block px-4 py-2 text-sm'
@@ -61,6 +66,6 @@ export default function Dropdown({options}:DropdownProps) {
         </Menu.Items>
       </Transition>
     </Menu>
-    </>
+    </div>
   )
 }

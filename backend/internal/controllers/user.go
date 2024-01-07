@@ -24,6 +24,27 @@ func (c *controller) getKey(userID int, locationID int) string {
 	return fmt.Sprintf("user_%d:location_%d", userID, locationID)
 }
 
+func (c *controller) ListUsers(ctx *gin.Context) {
+	var (
+		users = []DropdownOption{
+			{
+				Value:  1,
+				Option: "John",
+			},
+			{
+				Value:  2,
+				Option: "Simon",
+			},
+			{
+				Value:  3,
+				Option: "Carla",
+			},
+		}
+	)
+	ctx.JSON(http.StatusOK, users)
+
+}
+
 func (c *controller) Authenticate(ctx *gin.Context) {
 	var (
 		request = AuthenticationRequest{}

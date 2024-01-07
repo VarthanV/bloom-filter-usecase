@@ -19,3 +19,8 @@ type ErrorResponse struct {
 type AuthenticateSuccessResponse struct {
 	Goto GoTo `json:"goto"`
 }
+
+type DropdownOption struct {
+	Option string `json:"option"`
+	Value  int    `json:"value"`
+}
