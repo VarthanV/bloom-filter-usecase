@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
   const [users, setUsers] = useState<DropdownOption[] | null>(null);
   const [locations, setLocations] = useState<DropdownOption[] | null>(null);
-  const [selectedOption, setSelectedOption] = useState<{
+  const [state, setSelectedOption] = useState<{
     user_id: number;
     location_id: number;
   }>({
@@ -16,14 +16,15 @@ export default function Login() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const navigate = useNavigate();
 
+
   const login = () => {
     setIsAuthenticating(true);
   };
 
   const displaySelectedLocation = () => {
-    if (selectedOption.location_id && locations) {
+    if (state.location_id && locations) {
       const location = locations.filter(
-        (item) => item.value === selectedOption.location_id
+        (item) => item.value === state.location_id
       );
       if (location) {
         return location[0].option;
@@ -33,9 +34,9 @@ export default function Login() {
   };
 
   const displaySelectedUser = () => {
-    if (selectedOption.user_id && users) {
+    if (state.user_id && users) {
       const user = users.filter(
-        (item) => item.value === selectedOption.user_id
+        (item) => item.value === state.user_id
       );
       if (user) {
         return user[0].option;
@@ -77,16 +78,16 @@ export default function Login() {
     if (isAuthenticating) {
       fetch("http://localhost:8080/authenticate", {
         method: "POST",
-        body: JSON.stringify(selectedOption),
+        body: JSON.stringify(state),
       })
         .then((res) => res.json())
         .then((data) => {
          switch(data.goto){
-            case 'home_page':
-                navigate('/homepage');
+            case 'homepage':
+                navigate('/home');
                 break
             case 'two_factor_auth':
-                navigate('/challenge')
+                navigate('/challenge',{state:state})
                 break
          }
         })
@@ -115,7 +116,7 @@ export default function Login() {
                   options={locations}
                   onOptionClick={(val) => {
                     setSelectedOption({
-                      ...selectedOption,
+                      ...state,
                       location_id: val,
                     });
                   }}
@@ -127,7 +128,7 @@ export default function Login() {
                   options={users}
                   onOptionClick={(val) => {
                     setSelectedOption({
-                      ...selectedOption,
+                      ...state,
                       user_id: val,
                     });
                   }}
