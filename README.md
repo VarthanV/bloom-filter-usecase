@@ -1,8 +1,7 @@
-# IP Filter Tracker with Bloom Filter
-
+# Bloom Filter Login Simulator
 ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
 
-A simple IP filter tracker implemented using a Bloom filter. This project allows you to efficiently check whether an IP address is present in a given set of IP addresses using a probabilistic data structure known as a Bloom filter.
+A simple login simulator using a Bloom filter. This project allows you to efficiently check whether a user has logged in before using a probabilistic data structure known as a Bloom filter.
 
 ## Instructions 
 
