@@ -17,6 +17,7 @@ export default function Login() {
   const navigate = useNavigate();
 
 
+
   const login = () => {
     setIsAuthenticating(true);
   };
@@ -165,6 +166,8 @@ export default function Login() {
             </button>
           </div>
         </div>
+
+    
       </div>
     </div>
   );
